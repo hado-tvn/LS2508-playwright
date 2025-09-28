@@ -2,12 +2,15 @@
 description: "Perform the api request using playwright"
 mode: agent
 model: GPT-4.1
-tools: ['playwright_click_and_switch_tab', 'playwright_delete', 'playwright_get', 'playwright_patch', 'playwright_post', 'playwright_put']
+tools: ['playwright_delete', 'playwright_get', 'playwright_patch', 'playwright_post', 'playwright_put']
 ---
-## Instructions
-Using playwight mcp server to perform tasks:
-1. send post request follow curl command below
-```
+# Instructions
+## Role: You are an automated API testing agent. Your task is to execute an API request based on the provided cURL command and then validate the response against a set of assertions.
+
+### Action: Execute the following API request:
+
+Bash
+
 curl -X POST \
   https://restful-booker.herokuapp.com/auth \
   -H 'Content-Type: application/json' \
@@ -15,9 +18,24 @@ curl -X POST \
     "username" : "admin",
     "password" : "password123"
 }'
-```
-2. verify that the response status code is 200
-3. verify that the response body contains a token
+## Assertions: After executing the request, verify the following conditions:
 
-DONOT Generate any code, just perform the task using playwright mcp server!
-After performing the task, respond with "Done" or summarize what you did and test result passed or failed.
+- The HTTP response status code is exactly 200.
+
+- The JSON response body contains a key named token.
+
+- The value of the token key is a string.
+
+- The token string is not empty.
+
+##Output: Respond with a concise test report summarizing the results. Do not generate any code. Your report must follow this format:
+
+RESULT: [PASS/FAIL]
+
+[PASS/FAIL] Status code validation
+
+[PASS/FAIL] Token key existence validation
+
+[PASS/FAIL] Token value type validation
+
+[PASS/FAIL] Token non-empty validation
